@@ -54,17 +54,19 @@ const MovieCard = ({
   Title,
   Poster,
   onClick,
+  selected = false,
 }: {
   Title: string;
   Poster: string;
   onClick: () => any;
+  selected: boolean
 }) => {
   return (
     <WrappedListItem
       sx={{ maxWidth: 178, borderRadius: "11px" }}
       onClick={() => onClick()}
     >
-      <CardActionArea sx={{ display: "flex", flexDirection: "column" }}>
+      <CardActionArea sx={{ display: "flex", flexDirection: "column", borderRadius: '11px', border: selected ? '3px solid #00E0FF' : '' }}>
         <CardContent sx={{ width: "100%", p: 0, display: "contents" }}>
           <Grid2 container spacing={1}>
             <Grid2 xs={16}>
@@ -102,6 +104,7 @@ export interface Movie {
   Director: string;
   Language: string;
   Plot: string;
+  imdbID: string
 }
 
 export interface SelectedMovie {
@@ -127,7 +130,6 @@ export default function ActionAreaCard({ moviesData }: { moviesData: any[] }) {
     });
   };
 
-  console.log(selectedMovie);
   return (
     <Box>
       {moviesData.length === 0 && (
@@ -178,6 +180,10 @@ export default function ActionAreaCard({ moviesData }: { moviesData: any[] }) {
                         key={movie.imdbID}
                         {...movie}
                         onClick={() => onMovieSelect(i, j)}
+                        selected={
+                          selectedMovie &&
+                          selectedMovie.movie.imdbID === movie.imdbID
+                        }
                       />
                     </Grid2>
                   );

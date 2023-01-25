@@ -96,7 +96,6 @@ const WrappedListItem = styled(ListItem)<{
 export default function DrawerData() {
   const theme: Theme = useTheme();
   const router = useRouter();
-  console.log(router.pathname);
 
   const ListItemWrapper = ({
     text,
