@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import { Button, Grid, Slider, Theme, useMediaQuery } from "@mui/material";
 import styled from "@emotion/styled";
+import { convertImage, toBase64 } from "../src/util";
 
 const SlideWrapper = styled(Slider)<{ bColor: string }>`
   height: 8px;
@@ -20,24 +21,6 @@ const SlideWrapper = styled(Slider)<{ bColor: string }>`
     border: none;
   }
 `;
-const convertImage = (w: number, h: number) => `
-<svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <defs>
-    <linearGradient id="g">
-      <stop stop-color="#333" offset="20%" />
-      <stop stop-color="#222" offset="50%" />
-      <stop stop-color="#333" offset="70%" />
-    </linearGradient>
-  </defs>
-  <rect width="${w}" height="${h}" fill="#333" />
-  <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
-  <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
-</svg>`;
-
-const toBase64 = (str: string) =>
-  typeof window === "undefined"
-    ? Buffer.from(str).toString("base64")
-    : window.btoa(str);
 
 export default function MediaControlCard(props: any) {
   const theme: Theme = useTheme();
@@ -85,7 +68,11 @@ export default function MediaControlCard(props: any) {
             </Typography>
             <Box display="flex" alignItems="center">
               <SlideWrapper
-                bColor={theme.custom?.color1A2536 || "inherit"}
+                bColor={
+                  theme.palette.mode === "dark"
+                    ? theme.custom.color1A2536 || "inherit"
+                    : theme.custom.colorNavSelected
+                }
                 // sx={{ bgcolor: theme.palette.primary.main}}
                 size="medium"
                 value={ratingNo}
@@ -98,7 +85,7 @@ export default function MediaControlCard(props: any) {
                 fontSize={16}
                 fontWeight={600}
                 lineHeight={"31px"}
-                sx={{ color: theme.custom?.colorRating }}
+                sx={{ color: theme.custom.colorRating }}
               >
                 {ratingText}
               </Typography>
@@ -146,7 +133,7 @@ export default function MediaControlCard(props: any) {
             <Box paddingTop={"20px"}>
               <Typography
                 fontSize={14}
-                sx={{ color: theme.custom?.colorRating }}
+                sx={{ color: theme.custom.colorRating }}
               >
                 {props.Plot}
               </Typography>

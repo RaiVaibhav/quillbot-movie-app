@@ -89,7 +89,7 @@ const WrappedListItem = styled(ListItem)<{
       content: "' '",
       height: "40px",
       width: "3px",
-      backgroundColor: `${theme.custom?.colorNavSelected}`,
+      backgroundColor: `${theme.custom.colorNavSelected}`,
     },
   }),
 }));
@@ -126,7 +126,7 @@ export default function DrawerData() {
           <ListItemButton sx={{ paddingLeft: "52px" }}>
             <ListItemIcon
               sx={{
-                color: isSelected ? theme.custom?.colorNavSelected : "inherit",
+                color: isSelected ? theme.custom.colorNavSelected : "inherit",
               }}
             >
               {icon}
@@ -134,7 +134,7 @@ export default function DrawerData() {
             <ListItemText
               primaryTypographyProps={{
                 fontWeight: 600,
-                color: isSelected ? theme.custom?.colorNavSelected : "inherit",
+                color: isSelected ? theme.custom.colorNavSelected : "inherit",
               }}
               primary={text}
             />

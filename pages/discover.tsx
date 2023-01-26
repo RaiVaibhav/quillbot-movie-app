@@ -2,7 +2,7 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { CardActionArea, Theme, useMediaQuery } from "@mui/material";
+import { CardActionArea, Theme, useMediaQuery, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import Image from "next/image";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
@@ -11,6 +11,7 @@ import Grid2 from "@mui/material/Unstable_Grid2"; // Grid version 2
 import { useWidth } from "../src/hooks/useWidth";
 import styled from "@emotion/styled";
 import MediaControlCard from "../components/MovieDetailsCard";
+import { convertImage, toBase64 } from "../src/util";
 
 const WrappedListItem = styled(Card)<{
   [key: string]: any;
@@ -21,7 +22,7 @@ const WrappedListItem = styled(Card)<{
     content: "' '",
     height: "40px",
     width: "3px",
-    backgroundColor: `${theme.custom?.colorNavSelected}`,
+    backgroundColor: `${theme.custom.colorNavSelected}`,
   },
 }));
 
@@ -61,12 +62,20 @@ const MovieCard = ({
   onClick: () => any;
   selected: boolean
 }) => {
+  const theme = useTheme();
   return (
     <WrappedListItem
       sx={{ maxWidth: 178, borderRadius: "11px" }}
       onClick={() => onClick()}
     >
-      <CardActionArea sx={{ display: "flex", flexDirection: "column", borderRadius: '11px', border: selected ? '3px solid #00E0FF' : '' }}>
+      <CardActionArea
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          borderRadius: "11px",
+          border: selected ? `3px solid ${theme.custom.colorNavSelected}` : "",
+        }}
+      >
         <CardContent sx={{ width: "100%", p: 0, display: "contents" }}>
           <Grid2 container spacing={1}>
             <Grid2 xs={16}>
@@ -74,6 +83,10 @@ const MovieCard = ({
                 alt={Poster}
                 style={{ borderRadius: "11px" }}
                 src={Poster}
+                placeholder="blur"
+                blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                  convertImage(157, 188)
+                )}`}
                 height={188}
                 width={157}
               />
@@ -155,7 +168,7 @@ export default function ActionAreaCard({ moviesData }: { moviesData: any[] }) {
                 <WrappedAnimationChild showItem={!!showItem}>
                   <AnimatedMovieDetail showItem={!!showItem}>
                     {selectedMovie && (
-                      <MediaControlCard {...selectedMovie?.movie} />
+                      <MediaControlCard key={selectedMovie.movie.imdbID} {...selectedMovie?.movie} />
                     )}
                   </AnimatedMovieDetail>
                 </WrappedAnimationChild>

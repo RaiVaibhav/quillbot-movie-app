@@ -4,7 +4,6 @@ import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import styled from "@emotion/styled";
-import { useTheme } from "@emotion/react";
 import { Theme } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import FormControlUnstyled from "@mui/base/FormControlUnstyled";
@@ -15,9 +14,9 @@ const InputWrapper = styled(Paper)<{ theme?: Theme; isClicked: boolean }>(
     borderRadius: "8px",
     backgroundImage: theme?.palette.mode === "dark" ? "none" : "unset",
     backgroundColor: `${
-      isClicked && theme?.palette.mode === "dark"
-        ? theme?.custom?.color1A2536
-        : theme?.palette.background.default
+      isClicked && theme.palette.mode === "dark"
+        ? theme.custom.color1A2536
+        : theme.palette.background.default
     }`,
     transition: `${theme?.transitions.create("width")}`,
     maxWidth: "576px",
@@ -56,7 +55,6 @@ export default function SearchInput({
 }) {
   const [isClicked, setIsClicked] = React.useState(false);
   const [val, setVal] = React.useState("");
-  const theme = useTheme();
   return (
     <InputWrapper
       //@ts-ignore

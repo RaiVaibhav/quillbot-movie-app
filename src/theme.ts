@@ -3,10 +3,10 @@ import { PaletteMode } from "@mui/material";
 
 declare module "@mui/material/styles" {
   interface CustomTheme {
-    custom?: {
+    custom: {
       color1A2536?: string;
-      colorNavSelected?: string;
-      colorRating?: string;
+      colorNavSelected: string;
+      colorRating: string;
     };
   }
 
